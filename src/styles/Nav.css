@@ -1,0 +1,43 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    color: rgb(0, 0, 0);
+}
+
+nav h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav div {
+    display: flex;
+    gap: 1rem;
+}
+
+nav button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+nav button.login {
+    background-color: #4CAF50; 
+}
+
+nav button.signup {
+    background-color: #000; 
+}
+
+nav button:hover {
+    background-color: #45a049;
+}
+
+nav button.signup:hover {
+    background-color: #333; 
+}
