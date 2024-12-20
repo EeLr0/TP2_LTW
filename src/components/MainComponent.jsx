@@ -6,7 +6,7 @@ import '../styles/MainComponent.css'
 
 function MainComponent(){
     const [url, setUrl] = useState("");
-    //const [article, setArticle] = useState("");
+    const [inputUrl, setInputUrl] = useState("");
     const [allArticle, setAllArticle] = useState([]);
     const [resumo, setResumo] = useState("");
     const [error, setError] = useState("");
@@ -36,11 +36,11 @@ function MainComponent(){
                   console.log(response.data);
                   if (response.status >= 200 && response.status < 300){
                     setResumo(response.data.summary);
-                    setAllArticle([url, ...allArticle]);
+                    setAllArticle(prev => (prev.includes(url) ? prev : [url, ...prev]));
 
                   }
               } catch (error) {
-                    setError(error)
+                    setError(error.message || "Erro")
                     console.error(error);
               }
         };
@@ -50,33 +50,37 @@ function MainComponent(){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        if(url) setUrl(url);
+        if (inputUrl) setUrl(inputUrl);
+        
     };
 
     return(
         <div className="div">
             <form className="form" onSubmit={handleSubmit}>
-                <input type="url" placeholder="Colar Link do artigo"  value={url} onChange={(e)=> setUrl(e.target.value)}/>
-                <button>Enter</button>
+                <input type="url" placeholder="Colar Link do artigo"  value={inputUrl} onChange={(e)=> setInputUrl(e.target.value)}/>
+                <button type="submit">Enter</button>
             </form>
             <div>
                 {allArticle.map((item, index) =>(
                     <div 
-                        key={`-${index}`}>
-                        <div onClick={() => setUrl(item)}>
-                            <img src="" alt="" />
+                        key={`-${index}`}
+                        className="history-item">
+                        <div>
+                            <button onClick={() => setUrl(item)}>Colar</button>
                         </div>
                         <div>
-                            <p>{item}</p>
+                            <p className="">{item}</p>
                         </div>
                     </div>
                 ))}
             </div>
-            {resumo &&
-                <div>
+            {resumo && (
+                <div className="summary-box">
                     <h3>Este é o resultado do <span>Resumo</span></h3>
                     <p>{resumo}</p>
                 </div>
+            )
+                
             }
 
             {error && <Erro err={error}/>}
